@@ -1,23 +1,16 @@
 defmodule DoreiclientWeb.Router do
   use DoreiclientWeb, :router
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", DoreiclientWeb do
-    pipe_through :browser
-    resources "/users", UserController, except: [:new, :edit]
+    pipe_through :api
+    resources "/users", UserController, except: [:new, :edit] # post: ユーザー追加
     resources "/tasks", TaskController, except: [:new, :edit]
     get "/", PageController, :index
+    post "/accomp", TaskController, :accomp
   end
 
   # Other scopes may use custom stacks.

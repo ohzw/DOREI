@@ -50,8 +50,9 @@ defmodule Doreiclient.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
+    val = Map.put(attrs, :is_accomplished, false)
     %Task{}
-    |> Task.changeset(attrs)
+    |> Task.changeset(val)
     |> Repo.insert()
   end
 
@@ -100,5 +101,11 @@ defmodule Doreiclient.Tasks do
   """
   def change_task(%Task{} = task) do
     Task.changeset(task, %{})
+  end
+
+  def accomplish(task,id) do
+    from(p in Task,
+      where: p.task == ^task and p.groupid == ^id)
+    |> Repo.update_all(set: [is_accomplished: true])
   end
 end

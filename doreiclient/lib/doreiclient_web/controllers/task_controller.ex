@@ -40,4 +40,9 @@ defmodule DoreiclientWeb.TaskController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def accomp(conn,%{"task" => name,"groupid" => id}) do
+    Tasks.accomplish(name,id)
+    json(conn, %{message: "Task has been accomplished!"})
+  end
 end
