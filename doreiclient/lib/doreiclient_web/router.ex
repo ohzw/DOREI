@@ -16,6 +16,7 @@ defmodule DoreiclientWeb.Router do
   scope "/", DoreiclientWeb do
     pipe_through :browser
     resources "/users", UserController, except: [:new, :edit]
+    resources "/tasks", TaskController, except: [:new, :edit]
     get "/", PageController, :index
   end
 
