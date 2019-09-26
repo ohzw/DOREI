@@ -45,4 +45,10 @@ defmodule DoreiclientWeb.TaskController do
     Tasks.accomplish(name,id)
     json(conn, %{message: "Task has been accomplished!"})
   end
+
+  def changewoker(conn,%{"newWoker" => newWoker}) do
+    taskId = Task.get_task!(id)
+    Tasks.updateWoker(newWoker,taskId)
+  end
+
 end
