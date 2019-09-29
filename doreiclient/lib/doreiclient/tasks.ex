@@ -108,4 +108,10 @@ defmodule Doreiclient.Tasks do
       where: p.task == ^task and p.groupid == ^id)
     |> Repo.update_all(set: [is_accomplished: true])
   end
+
+  def updateWorker(newWorker,taskId) do
+    from(p in Task, where: p.id == ^taskId)
+    |> Repo.update_all(set: [worker: newWorker])
+  end
+
 end
