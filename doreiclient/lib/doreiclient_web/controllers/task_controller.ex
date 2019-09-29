@@ -41,14 +41,14 @@ defmodule DoreiclientWeb.TaskController do
     end
   end
 
-  def accomp(conn,%{"task" => name,"groupid" => id}) do
+  def accomp(conn, %{"task" => name,"groupid" => id}) do
     Tasks.accomplish(name,id)
     json(conn, %{message: "Task has been accomplished!"})
   end
 
-  def changewoker(conn,%{"newWoker" => newWoker}) do
-    taskId = Task.get_task!(id)
-    Tasks.updateWoker(newWoker,taskId)
+  def changeworker(conn, %{"newWorker" => newWorker, "taskId" => taskId}) do
+    Tasks.updateWorker(newWorker,taskId)
+    json(conn, %{message: "Worker has been updated!"})
   end
 
 end

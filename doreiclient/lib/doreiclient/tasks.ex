@@ -109,9 +109,9 @@ defmodule Doreiclient.Tasks do
     |> Repo.update_all(set: [is_accomplished: true])
   end
 
-  def updateWoker(newWoker,taskId) do
+  def updateWorker(newWorker,taskId) do
     from(p in Task, where: p.id == ^taskId)
-    |> Repo.update_all(set: [woker: newWoker])
+    |> Repo.update_all(set: [worker: newWorker])
   end
 
 end
