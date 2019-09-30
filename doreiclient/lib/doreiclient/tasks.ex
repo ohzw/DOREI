@@ -2,7 +2,7 @@ defmodule Doreiclient.Tasks do
   @moduledoc """
   The Tasks context.
   """
-
+  use Timex
   import Ecto.Query, warn: false
   alias Doreiclient.Repo
 
@@ -104,9 +104,9 @@ defmodule Doreiclient.Tasks do
   end
 
   def accomplish(task,id) do
-    from(p in Task,
-      where: p.task == ^task and p.groupid == ^id)
-    |> Repo.update_all(set: [is_accomplished: true])
+    accomplished_at = NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
+    from(p in Task, where: p.task == ^task and p.groupid == ^id)
+    |> Repo.update_all(set: [is_accomplished: true, accomplished_at: accomplished_at])
   end
 
   def updateWorker(newWorker,taskId) do

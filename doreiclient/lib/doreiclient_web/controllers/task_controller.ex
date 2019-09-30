@@ -1,5 +1,6 @@
 defmodule DoreiclientWeb.TaskController do
   use DoreiclientWeb, :controller
+  use Timex
 
   alias Doreiclient.Tasks
   alias Doreiclient.Tasks.Task
