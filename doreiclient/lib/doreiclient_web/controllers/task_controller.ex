@@ -47,11 +47,11 @@ defmodule DoreiclientWeb.TaskController do
   end
 
   def set_deadline(conn,%{"task" => id,"year" => year,"month" => month,"day" => day,"hour" => hour,"minute" => minute,"second" => second}) do
-    time = 
+    time =
       NaiveDateTime.new(year,month,day,hour,minute,second)
       |>elem(1)
-    message = Tasks.set_Deadline(id,time)
-    json(conn,{message: message})
+    Tasks.updateDeadline(id,time)
+    json(conn,%{message: "Deadline has been updated!"})
   end
   def changeworker(conn, %{"newWorker" => newWorker, "taskId" => taskId}) do
     Tasks.updateWorker(newWorker,taskId)

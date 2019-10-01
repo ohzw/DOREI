@@ -114,4 +114,9 @@ defmodule Doreiclient.Tasks do
     |> Repo.update_all(set: [worker: newWorker])
   end
 
+  def updateDeadline(id,time) do
+    from(p in Task, where: p.id == ^id)
+    |> Repo.update_all(set: [deadline: time])
+  end
+
 end
