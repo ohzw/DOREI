@@ -40,4 +40,8 @@ defmodule DoreiclientWeb.GroupController do
       send_resp(conn, :no_content, "")
     end
   end
+  def change_leader(conn,%{"leader" => leader,"group" => id}) do
+    Groups.change_leader(id,leader)
+    son(conn, %{message: "Leader has been updated!"})
+  end
 end

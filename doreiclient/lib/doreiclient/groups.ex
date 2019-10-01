@@ -101,4 +101,8 @@ defmodule Doreiclient.Groups do
   def change_group(%Group{} = group) do
     Group.changeset(group, %{})
   end
+  def updateLeader(newLeader,groupId) do
+    from(p in Group, where: p.id == ^groupId)
+    |> Repo.update_all(set: [Leader: newLeader])
+  end
 end
