@@ -12,6 +12,7 @@ defmodule DoreiclientWeb.Router do
     get "/", PageController, :index
     post "/accomp", TaskController, :accomp
     post "/changeworker", TaskController, :changeworker
+    get "/taskdata", TaskController, :get_task_data
   end
 
   # Other scopes may use custom stacks.

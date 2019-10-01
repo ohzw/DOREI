@@ -15,6 +15,8 @@ defmodule DoreiclientWeb.TaskView do
       task: task.task,
       groupid: task.groupid,
       order: task.order,
-      worker: task.worker}
+      worker: task.worker,
+      is_accomplished: task.is_accomplished,
+      accomplished_at: task.accomplished_at}
   end
 end
