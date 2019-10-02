@@ -12,7 +12,7 @@ defmodule DoreiclientWeb.TokenController do
   end
 
   def create(conn, %{"token" => token_params}) do
-    Phonenix.Token.sign(conn,"invite to group",token)# in progress
+    Phonenix.Token.sign(conn,"invite to group",token_params["token"])# in progress
     with {:ok, %Token{} = token} <- Verify.create_token(token_params) do
       conn
       |> put_status(:created)
