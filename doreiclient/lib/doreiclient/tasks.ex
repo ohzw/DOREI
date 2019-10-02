@@ -119,4 +119,8 @@ defmodule Doreiclient.Tasks do
     |> Repo.update_all(set: [deadline: time])
   end
 
+  def set_preference(id,preference) do
+    from(p in Task, where: p.id == ^id)
+    |> Repo.update_all(set: [preference: preference])
+  end
 end

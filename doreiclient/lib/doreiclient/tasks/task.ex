@@ -9,7 +9,7 @@ defmodule Doreiclient.Tasks.Task do
     field :worker, :string
     field :deadline, :naive_datetime
     field :is_accomplished, :boolean
-
+    field :preference, :integer
     timestamps()
   end
 
