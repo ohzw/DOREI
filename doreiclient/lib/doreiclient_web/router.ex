@@ -11,7 +11,7 @@ defmodule DoreiclientWeb.Router do
     resources "/tasks", TaskController, except: [:new, :edit]
     post "/accomp", TaskController, :accomp
     post "/changeworker", TaskController, :changeworker
-    get "/taskdata", TaskController, :get_task_data
+    post "/setdeadline", TaskController, :set_deadline
   end
 
   # Other scopes may use custom stacks.

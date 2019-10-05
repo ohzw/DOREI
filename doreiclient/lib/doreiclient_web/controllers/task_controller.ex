@@ -1,6 +1,5 @@
 defmodule DoreiclientWeb.TaskController do
   use DoreiclientWeb, :controller
-  use Timex
 
   alias Doreiclient.Tasks
   alias Doreiclient.Tasks.Task
@@ -42,16 +41,18 @@ defmodule DoreiclientWeb.TaskController do
     end
   end
 
-  def get_task_data(conn, %{"id" => id}) do
-    task = Tasks.get_task!(id)
-    render(conn, "show.json", task: task)
-  end
-
   def accomp(conn, %{"task" => name,"groupid" => id}) do
     Tasks.accomplish(name,id)
     json(conn, %{message: "Task has been accomplished!"})
   end
 
+  def set_deadline(conn,%{"task" => id,"year" => year,"month" => month,"day" => day,"hour" => hour,"minute" => minute,"second" => second}) do
+    time =
+      NaiveDateTime.new(year,month,day,hour,minute,second)
+      |>elem(1)
+    Tasks.updateDeadline(id,time)
+    json(conn,%{message: "Deadline has been updated!"})
+  end
   def changeworker(conn, %{"newWorker" => newWorker, "taskId" => taskId}) do
     Tasks.updateWorker(newWorker,taskId)
     json(conn, %{message: "Worker has been updated!"})
