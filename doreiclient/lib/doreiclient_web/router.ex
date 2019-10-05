@@ -8,7 +8,7 @@ defmodule DoreiclientWeb.Router do
   scope "/", DoreiclientWeb do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit] # post: ユーザー追加
-    resources "/tasks", TaskController, except: [:new, :edit]
+    resources "/tasks", TaskController, except: [:new, :edit] # post: タスク割り当て
     post "/accomp", TaskController, :accomp
     post "/changeworker", TaskController, :changeworker
     post "/setdeadline", TaskController, :set_deadline
