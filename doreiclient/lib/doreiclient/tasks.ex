@@ -50,7 +50,7 @@ defmodule Doreiclient.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
-    val = Map.put(attrs, :is_accomplished, false)
+    val = Map.put(attrs, "is_accomplished", false)
     %Task{}
     |> Task.changeset(val)
     |> Repo.insert()
