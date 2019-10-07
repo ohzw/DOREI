@@ -109,14 +109,20 @@ defmodule Doreiclient.Tasks do
     |> Repo.update_all(set: [is_accomplished: true, accomplished_at: accomplished_at])
   end
 
-  def updateWorker(newWorker,taskId) do
-    from(p in Task, where: p.id == ^taskId)
+  def updateWorker(newWorker,id) do
+    from(p in Task, where: p.id == ^id)
     |> Repo.update_all(set: [worker: newWorker])
   end
 
   def updateDeadline(id,time) do
     from(p in Task, where: p.id == ^id)
-    |> Repo.update_all(set: [deadline: time])
+    |> Repo.update_all(set: [dead_line: time])
+  end
+
+  def compare_time(id) do
+    dead_line = Repo.get!(Task, id).dead_line
+    accomplished_at =  Repo.get!(Task, id).accomplished_at
+    NaiveDateTime.diff(dead_line,accomplished_at)
   end
 
   def set_preference(id,preference) do

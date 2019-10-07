@@ -17,6 +17,7 @@ defmodule DoreiclientWeb.TaskView do
       order: task.order,
       worker: task.worker,
       is_accomplished: task.is_accomplished,
-      accomplished_at: task.accomplished_at}
+      accomplished_at: task.accomplished_at,
+      dead_line: task.dead_line}
   end
 end

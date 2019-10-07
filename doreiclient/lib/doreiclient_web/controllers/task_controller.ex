@@ -52,8 +52,24 @@ defmodule DoreiclientWeb.TaskController do
     json(conn, %{message: "Task has been accomplished!"})
   end
 
-  def changeworker(conn, %{"newWorker" => newWorker, "taskId" => taskId}) do
-    Tasks.updateWorker(newWorker,taskId)
+  def set_deadline(conn,%{"task" => id,"year" => year,"month" => month,"day" => day,"hour" => hour,"minute" => minute,"second" => second}) do
+    time =
+      NaiveDateTime.new(year,month,day,hour,minute,second)
+      |>elem(1)
+    Tasks.updateDeadline(id,time)
+    json(conn, %{message: "Deadline has been updated!"})
+  end
+
+  def time_difference(conn, %{"id" => id}) do
+    time = Tasks.compare_time(id)
+      day = div(time, 86400)
+      hour = div(rem(time, 86400), 3600)
+      minute = div(rem(time, 3600), 60)
+    json(conn, %{day: day, hour: hour})
+  end
+
+  def changeworker(conn, %{"newWorker" => newWorker, "id" => id}) do
+    Tasks.updateWorker(newWorker,id)
     json(conn, %{message: "Worker has been updated!"})
   end
 
