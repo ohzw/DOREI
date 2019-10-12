@@ -1,6 +1,11 @@
 defmodule DoreiclientWeb.UserView do
   use DoreiclientWeb, :view
   alias DoreiclientWeb.UserView
+  alias Doreiclient.Accounts
+
+  def current_user(conn) do
+    Accounts.current_user(conn)
+  end
 
   def render("index.json", %{users: users}) do
     %{data: render_many(users, UserView, "user.json")}
