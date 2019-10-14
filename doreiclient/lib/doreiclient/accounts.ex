@@ -2,7 +2,6 @@ defmodule Doreiclient.Accounts do
   @moduledoc """
   The Accounts context.
   """
-
   import Ecto.Query, warn: false
   alias Doreiclient.Repo
   alias Doreiclient.Accounts.User

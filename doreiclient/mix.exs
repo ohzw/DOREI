@@ -20,7 +20,7 @@ defmodule Doreiclient.MixProject do
   def application do
     [
       mod: {Doreiclient.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :guardian]
     ]
   end
 

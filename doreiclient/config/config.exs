@@ -22,9 +22,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :doreiclient, Doreiclient.Accounts.Guardian,
+config :guardian, Doreiclient.Accounts.Guardian,
   issuer: "doreiclient",
-  secret_key: "TAe1aV1Iznr0X8NpUG427JiU0LCfuAzRDDUG/8r2+EVqTfbFZcs4tuMRelEG77FL"
+  secret_key: "ZcMApO99nUhrvCbRbrmn7mM4GO8oqPeefVGlErdE4D6zSp19v2B+Do/fRleIrRP0",
+  serializer: Doreiclient.GuardianSerializer
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason

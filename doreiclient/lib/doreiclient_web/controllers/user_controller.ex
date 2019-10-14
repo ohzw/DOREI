@@ -5,22 +5,19 @@ defmodule DoreiclientWeb.UserController do
   alias Doreiclient.Accounts.User
   alias Doreiclient.Accounts.Guardian
 
-  plug :is_authorized when action in [:edit, :update, :delete]
-
   action_fallback DoreiclientWeb.FallbackController
 
+  plug :is_authorized when action in [:edit, :update, :delete]
 
   def index(conn, _params) do
     users = Accounts.list_users()
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, %{"userid" => userid, "name" => name, "password" => password}) do
-    user = %{userid: userid, name: name, password: password}
-    with {:ok, %User{} = user} <- Accounts.create_user(user) do
-      conn
-      |> json(%{message: "user has been created!"})
-      |> Guardian.Plug.sign_in(user)
+  def create(conn, %{"user" => user_params}) do
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+      json(conn, %{message: "user has been created!"})
+      Guardian.Plug.sign_in(user)
     end
   end
 
@@ -57,8 +54,9 @@ defmodule DoreiclientWeb.UserController do
         |> halt()
       end
   end
+
   def test(conn, _) do
-    who = Accounts.current_user(conn)
-    json(conn, %{who: who})
+    current_user = Accounts.current_user(conn)
+    conn |> json(%{msg: current_user})
   end
 end

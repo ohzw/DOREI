@@ -8,7 +8,7 @@ defmodule DoreiclientWeb.SessionController do
     changeset = Accounts.change_user(%User{})
   end
 
-  def create(conn, %{"userid" => userid, "password" => password}) do
+  def create(conn, %{"user" => %{"userid" => userid, "password" => password}}) do
     Accounts.authenticate_user(userid, password)
     |> login_reply(conn)
   end
@@ -20,8 +20,8 @@ defmodule DoreiclientWeb.SessionController do
 
   defp login_reply({:ok, user}, conn) do
     conn
-    |> json(%{message: "Logged in."})
     |> Guardian.Plug.sign_in(user)
+    |> json(%{message: "Logged in."})
   end
 
   def delete(conn, _) do
