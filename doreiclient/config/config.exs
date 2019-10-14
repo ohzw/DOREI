@@ -17,6 +17,10 @@ config :doreiclient, DoreiclientWeb.Endpoint,
   render_errors: [view: DoreiclientWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Doreiclient.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :doreiclient, Doreiclient.Accounts.Guardian,
+  issur: "doreiclient",
+  secret_key: "9f+oHPdVUGBenVbaV20NPiH9NmXmAlPJ9p2i6eXG2mM7awFiP1PliGX4ecmGoP+0"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

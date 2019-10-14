@@ -20,7 +20,7 @@ defmodule Doreiclient.MixProject do
   def application do
     [
       mod: {Doreiclient.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :guardian]
     ]
   end
 
@@ -43,7 +43,11 @@ defmodule Doreiclient.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:guardian, "~> 1.2"},
+      {:comeonin, "~> 4.1"},
+      {:bcrypt_elixir, "~> 1.1"},
+      {:plug, "~> 1.7"}
     ]
   end
 

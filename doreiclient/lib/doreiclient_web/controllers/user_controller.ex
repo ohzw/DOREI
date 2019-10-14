@@ -3,6 +3,9 @@ defmodule DoreiclientWeb.UserController do
 
   alias Doreiclient.Accounts
   alias Doreiclient.Accounts.User
+  alias Doreiclient.Accounts.Guardian
+
+  plug :is_authorized when action in [:edit, :update, :delete]
 
   action_fallback DoreiclientWeb.FallbackController
 
@@ -16,6 +19,7 @@ defmodule DoreiclientWeb.UserController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.user_path(conn, :show, user))
+      |> Guardian.Plug.sign_in(user)
       |> render("show.json", user: user)
     end
   end
@@ -33,11 +37,28 @@ defmodule DoreiclientWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def delete(conn, _) do
+    {:ok, _user} = Accounts.delete_user(conn.assigns.current_user)
+    conn
+    |> Guardian.Plug.sign_out()
+    |> json(%{message: "User deleted successfully."})
+    # |> send_resp(:no_content, "")
+  end
 
-    with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
-    end
+  defp is_authorized(conn, _) do
+    current_user = Accounts.current_user(conn)
+      if current_user.id == String.to_integer(conn.params["id"]) do
+        assign(conn, :current_user, current_user)
+      else
+        conn
+        |> json(%{error: "You can't modify."})
+        |> halt()
+      end
+  end
+
+  def test(conn, _) do
+    current_user = Accounts.current_user(conn)
+    conn
+    |> json(%{msg: current_user})
   end
 end
