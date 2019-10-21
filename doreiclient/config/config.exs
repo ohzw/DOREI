@@ -18,8 +18,13 @@ config :doreiclient, DoreiclientWeb.Endpoint,
   pubsub: [name: Doreiclient.PubSub, adapter: Phoenix.PubSub.PG2]
 
 config :doreiclient, Doreiclient.Accounts.Guardian,
-  issur: "doreiclient",
-  secret_key: "9f+oHPdVUGBenVbaV20NPiH9NmXmAlPJ9p2i6eXG2mM7awFiP1PliGX4ecmGoP+0"
+  issuer: "doreiclient",
+  secret_key: "/+s+JZmRXudBe57uLnEtPedBLMM0fZStQVHMZrGqqUFMqM4ulvey9gQw71avKCUb"
+
+config :guardian, Guardian.DB,
+  repo: Doreiclient.Repo,
+  schema_name: "guardian_tokens",
+  sweep_interval: 60 #分おきに期限切れトークンを削除
 
 # Configures Elixir's Logger
 config :logger, :console,

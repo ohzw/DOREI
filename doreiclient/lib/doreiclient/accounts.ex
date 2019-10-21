@@ -5,8 +5,8 @@ defmodule Doreiclient.Accounts do
 
   import Ecto.Query, warn: false
   alias Doreiclient.Repo
-  alias Doreiclient.Accounts.User
   alias Comeonin.Bcrypt
+  alias Doreiclient.Accounts.User
 
   @doc """
   Returns the list of users.
@@ -107,15 +107,17 @@ defmodule Doreiclient.Accounts do
     Repo.one(query)
     |> check_password(plain_text_password)
   end
-  defp check_password(nil, _), do: {:error, "Incorrect userid or password"}
+
+  defp check_password(nil, _), do: {:error, "Incorrect userid or password."}
   defp check_password(user, plain_text_password) do
     case Bcrypt.checkpw(plain_text_password, user.password) do
       true -> {:ok, user}
-      false -> {:error, "Incorrect userid or password"}
+      false -> {:error, "Incorrect userid or password."}
     end
   end
 
   def current_user(conn) do
     Guardian.Plug.current_resource(conn)
   end
+
 end

@@ -1,37 +1,28 @@
 defmodule DoreiclientWeb.Router do
   use DoreiclientWeb, :router
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  pipeline :auth do
-    plug Doreiclient.Accounts.Pipeline
-  end
-
-  pipeline :ensure_auth do
-    plug Guardian.Plug.EnsureAuthenticated
-  end
-
   scope "/", DoreiclientWeb do
-    pipe_through [:api, :auth]
-    # get "/", PageController, :index
-    get "/signin", UserController, :new
+    pipe_through :api
+
     post "/signin", UserController, :create
-    get "/login", SessionController, :new
-    post "/login", SessionController, :create
-    delete "/logout", SessionController, :delete
-  end
+    post "/deleteacc", UserController, :delet
+    post "/login", SessionController, :login
+    post "/logout", SessionController, :logout
+    post "/refresh_token", SessionController, :refresh_token
 
-  scope "/", DoreiclientWeb do
-    pipe_through [:api, :auth, :ensure_auth]
+    get "/", PageController, :index
     resources "/users", UserController, except: [:new, :edit] # post: ユーザー追加
+
     resources "/tasks", TaskController, except: [:new, :edit]
-    post "/accomp", TaskController, :accomp
-    post "/changeworker", TaskController, :changeworker
     get "/taskdata", TaskController, :get_task_data
     get "/taskdata/timedifference", TaskController, :time_difference
+    post "/changeworker", TaskController, :changeworker
     post "/setdeadline", TaskController, :set_deadline
-    get "/test", UserController, :test
+    post "/accomp", TaskController, :accomp
   end
 
   # Other scopes may use custom stacks.

@@ -4,16 +4,19 @@ defmodule Doreiclient.Application do
   @moduledoc false
 
   use Application
+  # import Supervisor.Spec
 
   def start(_type, _args) do
+    # import Supervisor.Spec
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       Doreiclient.Repo,
       # Start the endpoint when the application starts
-      DoreiclientWeb.Endpoint
+      DoreiclientWeb.Endpoint,
       # Starts a worker by calling: Doreiclient.Worker.start_link(arg)
       # {Doreiclient.Worker, arg},
+      Guardian.DB.Token.SweeperServer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
