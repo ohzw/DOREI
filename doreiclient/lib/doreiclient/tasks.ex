@@ -2,7 +2,7 @@ defmodule Doreiclient.Tasks do
   @moduledoc """
   The Tasks context.
   """
-  use Timex
+
   import Ecto.Query, warn: false
   alias Doreiclient.Repo
 
@@ -50,7 +50,7 @@ defmodule Doreiclient.Tasks do
 
   """
   def create_task(attrs \\ %{}) do
-    val = Map.put(attrs, :is_accomplished, false)
+    val = Map.put(attrs, "is_accomplished", false)
     %Task{}
     |> Task.changeset(val)
     |> Repo.insert()
@@ -104,9 +104,9 @@ defmodule Doreiclient.Tasks do
   end
 
   def accomplish(task,id) do
-    accomplished_at = NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
-    from(p in Task, where: p.task == ^task and p.groupid == ^id)
-    |> Repo.update_all(set: [is_accomplished: true, accomplished_at: accomplished_at])
+    from(p in Task,
+      where: p.task == ^task and p.groupid == ^id)
+    |> Repo.update_all(set: [is_accomplished: true])
   end
 
   def updateWorker(newWorker,id) do

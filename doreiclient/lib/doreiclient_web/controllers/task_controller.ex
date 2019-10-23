@@ -1,6 +1,5 @@
 defmodule DoreiclientWeb.TaskController do
   use DoreiclientWeb, :controller
-  use Timex
 
   alias Doreiclient.Tasks
   alias Doreiclient.Tasks.Task
@@ -40,11 +39,6 @@ defmodule DoreiclientWeb.TaskController do
     with {:ok, %Task{}} <- Tasks.delete_task(task) do
       send_resp(conn, :no_content, "")
     end
-  end
-
-  def get_task_data(conn, %{"id" => id}) do
-    task = Tasks.get_task!(id)
-    render(conn, "show.json", task: task)
   end
 
   def accomp(conn, %{"task" => name,"groupid" => id}) do
