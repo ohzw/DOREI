@@ -2,12 +2,14 @@ defmodule Doreiclient.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias Comeonin.Bcrypt
+  alias Doreiclient.GroupWorkers.GroupWorker
 
   schema "users" do
     field :name, :string
     field :password, :string
     field :userid, :string
 
+    has_many :group_workers, GroupWorker
     timestamps()
   end
 

@@ -7,7 +7,7 @@ defmodule Doreiclient.Groups do
   alias Doreiclient.Repo
 
   alias Doreiclient.Groups.Group
-  alias Doreiclient.Groups.GroupWorker
+  alias Doreiclient.GroupWorkers.GroupWorker
 
   @doc """
   Returns the list of groups.
@@ -103,19 +103,9 @@ defmodule Doreiclient.Groups do
     Group.changeset(group, %{})
   end
 
-  def add_to_workers(user_id, group_id) do
-    %GroupWorker{user_id: user_id, group_id: group_id, role: "leader"}
-    |> GroupWorker.changeset()
+  def create_group_worker(attrs \\ %{}) do
+    %GroupWorker{}
+    |> GroupWorker.changeset(attrs)
     |> Repo.insert()
   end
-
-  def is_in_group(group, worker) do
-    result = group |> Enum.find(fn(x) -> x == worker end) |> Repo.one()
-    if result == worker do
-      {:no, worker}
-    else
-      {:ok, worker}
-    end
-  end
-
 end

@@ -3,9 +3,9 @@ defmodule Doreiclient.Repo.Migrations.CreateGroupWorkers do
 
   def change do
     create table(:group_workers) do
-      add :user_id, references(:users, on_delete: :nothing)
-      add :group_id, references(:groups, on_delete: :nothing)
       add :role, :string
+      add :user_id, references(:users, on_delete: :delete_all), null: false
+      add :group_id, references(:groups, on_delete: :delete_all), null: false
 
       timestamps()
     end

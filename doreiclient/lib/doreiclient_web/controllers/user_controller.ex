@@ -29,7 +29,7 @@ defmodule DoreiclientWeb.UserController do
   def update(conn, %{"id" => id, "user" => user_params}) do
     current_user = Accounts.current_user(conn)
     user = Accounts.get_user!(id)
-    if current_user.id == user.id do
+    if current_user.idd == user.id do
       Accounts.update_user(user, user_params)
       render(conn, "show.json", user: user)
     else

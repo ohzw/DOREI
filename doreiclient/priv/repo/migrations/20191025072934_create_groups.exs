@@ -3,12 +3,11 @@ defmodule Doreiclient.Repo.Migrations.CreateGroups do
 
   def change do
     create table(:groups) do
-      add :name, :string
+      add :name, :string, null: false
       add :description, :string
 
       timestamps()
     end
 
-    create index(:groups, [:name])
   end
 end

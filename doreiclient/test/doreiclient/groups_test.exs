@@ -6,9 +6,9 @@ defmodule Doreiclient.GroupsTest do
   describe "groups" do
     alias Doreiclient.Groups.Group
 
-    @valid_attrs %{name: "some name", tasks: 42}
-    @update_attrs %{name: "some updated name", tasks: 43}
-    @invalid_attrs %{name: nil, tasks: nil}
+    @valid_attrs %{description: "some description", name: "some name"}
+    @update_attrs %{description: "some updated description", name: "some updated name"}
+    @invalid_attrs %{description: nil, name: nil}
 
     def group_fixture(attrs \\ %{}) do
       {:ok, group} =
@@ -31,8 +31,8 @@ defmodule Doreiclient.GroupsTest do
 
     test "create_group/1 with valid data creates a group" do
       assert {:ok, %Group{} = group} = Groups.create_group(@valid_attrs)
+      assert group.description == "some description"
       assert group.name == "some name"
-      assert group.tasks == 42
     end
 
     test "create_group/1 with invalid data returns error changeset" do
@@ -42,8 +42,8 @@ defmodule Doreiclient.GroupsTest do
     test "update_group/2 with valid data updates the group" do
       group = group_fixture()
       assert {:ok, %Group{} = group} = Groups.update_group(group, @update_attrs)
+      assert group.description == "some updated description"
       assert group.name == "some updated name"
-      assert group.tasks == 43
     end
 
     test "update_group/2 with invalid data returns error changeset" do

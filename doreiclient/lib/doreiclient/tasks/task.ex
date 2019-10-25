@@ -11,14 +11,13 @@ defmodule Doreiclient.Tasks.Task do
     field :preference, :integer
     field :accomplished_at, :naive_datetime
     field :dead_line, :naive_datetime
-
     timestamps()
   end
 
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:task, :order, :worker])
-    |> validate_required([:task, :order, :worker])
+    |> cast(attrs, [:task, :groupid, :order, :worker])
+    |> validate_required([:task, :groupid, :order, :worker])
   end
 end
