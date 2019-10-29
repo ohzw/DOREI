@@ -37,7 +37,7 @@ defmodule Doreiclient.Groups do
 
   """
   def get_group!(id), do: Repo.get!(Group, id)
-
+  def get_group_worker!(id), do: Repo.get!(GroupWorker, id)
   @doc """
   Creates a group.
 
@@ -108,4 +108,14 @@ defmodule Doreiclient.Groups do
     |> GroupWorker.changeset(attrs)
     |> Repo.insert()
   end
+
+  def check_group_workers(group_id, user_id) do
+  group_workers = Repo.get_by(GroupWorker, group_id: group_id, user_id: user_id)
+      if group_workers == nil do
+        {:not_found_user, user_id}
+      else
+        {:found_user, user_id}
+      end
+  end
+
 end

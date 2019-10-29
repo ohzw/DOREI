@@ -43,4 +43,15 @@ defmodule DoreiclientWeb.GroupController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def search_user_from_group(conn, %{"group_id" => group_id, "user_id" => user_id}) do
+    conn |> search_reply(Groups.check_group_workers(group_id, user_id))
+  end
+  defp search_reply(conn, {:not_found_user, user_id}) do
+    conn |> json%{msg: "user not found", user_id: user_id}
+  end
+  defp search_reply(conn, {:found_user, user_id}) do
+    conn |> json%{msg: "found user", user_id: user_id}
+  end
+
 end

@@ -21,21 +21,27 @@ defmodule DoreiclientWeb.Router do
     post "/logout", SessionController, :logout
     post "/refresh_token", SessionController, :refresh_token
     get "/", PageController, :index
+    get "/current_userid", UserController, :get_current_userid #テスト用
   end
 
   scope "/", DoreiclientWeb do
     pipe_through [:api, :auth, :ensure_auth]
+
     resources "/users", UserController, except: [:new, :edit] # post: ユーザー追加
     delete "/deleteacc", UserController, :delete
+
     resources "/tasks", TaskController, except: [:new, :edit]
+    post "/accomp", TaskController, :accomp
     get "/taskdata", TaskController, :get_task_data
     get "/taskdata/timedifference", TaskController, :time_difference
     post "/changeworker", TaskController, :changeworker
     post "/setdeadline", TaskController, :set_deadline
-    post "/accomp", TaskController, :accomp
-    get "/current_userid", UserController, :get_current_userid
 
     resources "/groups", GroupController, except: [:new, :edit]
+    post "/addworker", GroupController, :add_worker
+    post "/search_user_from_group", GroupController, :search_user_from_group #テスト用
+    # post "/create_grouptask", GroupController, :create_group_task
+    post "/set_role", GroupController, :set_role
   end
 
   # Other scopes may use custom stacks.
