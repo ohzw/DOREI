@@ -21,12 +21,12 @@ defmodule DoreiclientWeb.Router do
     post "/logout", SessionController, :logout
     post "/refresh_token", SessionController, :refresh_token
     get "/", PageController, :index
-    get "/current_userid", UserController, :get_current_userid #テスト用
   end
 
   scope "/", DoreiclientWeb do
     pipe_through [:api, :auth, :ensure_auth]
-
+    get "/userdata", UserController, :get_current_userdata
+    get "/current_userid", UserController, :get_current_userid #テスト用
     resources "/users", UserController, except: [:new, :edit] # post: ユーザー追加
     delete "/deleteacc", UserController, :delete
 

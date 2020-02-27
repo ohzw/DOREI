@@ -55,5 +55,10 @@ defmodule DoreiclientWeb.UserController do
     current_user = Accounts.current_user(conn)
     conn |> json(%{message: current_user.id})
   end
+  def get_current_userdata(conn, _) do
+    current_user = Accounts.current_user(conn)
+    user = Accounts.get_user!(current_user.id)
+    render(conn, "show.json", user: user)
+  end
 
 end
